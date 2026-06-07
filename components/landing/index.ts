@@ -1,0 +1,6 @@
+export { LandingHeader } from "./landing-header"
+export { LandingHero } from "./landing-hero"
+export { TechStack } from "./tech-stack"
+export { FeaturesSection } from "./features-section"
+export { StatsSection } from "./stats-section"
+export { LandingFooter } from "./landing-footer"
