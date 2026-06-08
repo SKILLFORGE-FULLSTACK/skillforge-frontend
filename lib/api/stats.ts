@@ -28,23 +28,30 @@ export interface ActivityEntry {
 
 export const statsApi = {
   myStats: async (): Promise<UserStats> => {
-    const { data } = await apiClient.get<{ stats: UserStats }>("/me/stats");
-    return data.stats;
+    const { data } = await apiClient.get("/me/stats");
+    return (data.stats ?? data) as UserStats;
   },
 
   updateStreak: async (): Promise<{ streak: number; xp_earned: number }> => {
-    const { data } = await apiClient.post<{ streak: number; xp_earned: number }>("/me/streak");
+    const { data } = await apiClient.post("/me/streak");
     return data;
   },
 
   xpHistory: async (): Promise<XpHistoryEntry[]> => {
-    const { data } = await apiClient.get<{ history: XpHistoryEntry[] }>("/me/xp-history");
-    return data.history;
+    const { data } = await apiClient.get("/me/xp-history");
+    const raw = data.history ?? data;
+    return Array.isArray(raw) ? (raw as XpHistoryEntry[]) : [];
   },
 
   activityHeatmap: async (): Promise<ActivityEntry[]> => {
-    const { data } = await apiClient.get<{ activity: ActivityEntry[] }>("/me/activity");
-    return data.activity;
+    const { data } = await apiClient.get("/me/activity");
+    const raw = data.activity ?? data;
+    if (Array.isArray(raw)) return raw as ActivityEntry[];
+    // API may return { "2024-01-01": 3, ... }
+    if (raw && typeof raw === "object") {
+      return Object.entries(raw).map(([date, count]) => ({ date, count: Number(count) }));
+    }
+    return [];
   },
 
   leaderboard: async (params?: { period?: string; page?: number }) => {

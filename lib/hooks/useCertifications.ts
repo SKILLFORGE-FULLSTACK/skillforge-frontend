@@ -3,6 +3,7 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { certificationsApi } from "../api/certifications";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 export function useCertifications() {
   return useQuery({
@@ -31,15 +32,25 @@ export function useMySubmissions() {
 
 export function useStartCertification() {
   const queryClient = useQueryClient();
+  const router = useRouter();
 
   return useMutation({
     mutationFn: (slug: string) => certificationsApi.start(slug),
-    onSuccess: () => {
+    onSuccess: (submission) => {
       queryClient.invalidateQueries({ queryKey: ["my-submissions"] });
       toast.success("Certification démarrée !");
+      router.push(`/dashboard/certifications/${submission.certification.slug}`);
     },
-    onError: (error: any) => {
-      toast.error(error.response?.data?.message || "Erreur lors du démarrage");
+    onError: (error: any, slug: string) => {
+      const status = error.response?.status;
+      const message: string = error.response?.data?.message ?? "";
+      // Backend renvoie 409 ou un message "already" quand déjà démarrée → naviguer directement
+      if (status === 409 || message.toLowerCase().includes("already") || message.toLowerCase().includes("déjà")) {
+        toast.info("Certification déjà en cours, redirection...");
+        router.push(`/dashboard/certifications/${slug}`);
+      } else {
+        toast.error(message || "Erreur lors du démarrage");
+      }
     },
   });
 }

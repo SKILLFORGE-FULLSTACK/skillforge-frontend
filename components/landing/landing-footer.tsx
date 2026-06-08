@@ -1,6 +1,9 @@
+"use client";
+
 import Link from "next/link";
 import { Logo } from "@/components/skillforge";
 import { Github, Linkedin } from "lucide-react";
+import { useT } from "@/lib/i18n/useTranslation";
 
 const footerLinks = {
   product: [
@@ -21,6 +24,8 @@ const footerLinks = {
 };
 
 export function LandingFooter() {
+  const { t } = useT();
+
   return (
     <footer className="bg-card border-t border-border py-12 lg:py-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -29,34 +34,26 @@ export function LandingFooter() {
           <div>
             <Logo href="/" className="mb-4" />
             <p className="text-sm text-muted-foreground mb-4">
-              Engineering-grade evaluation and career acceleration for the
-              modern developer.
+              {t("landing.footer.description")}
             </p>
             <div className="flex items-center gap-4">
-              <a
-                href="#"
-                className="text-muted-foreground hover:text-foreground transition-colors">
+              <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">
                 <Github className="w-5 h-5" />
               </a>
-              <a
-                href="#"
-                className="text-muted-foreground hover:text-foreground transition-colors">
+              <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">
                 <Linkedin className="w-5 h-5" />
               </a>
             </div>
           </div>
 
-          {/* Product Links */}
           <div>
             <h4 className="text-xs uppercase tracking-wider text-muted-foreground font-semibold mb-4">
-              Product
+              {t("landing.footer.product")}
             </h4>
             <ul className="space-y-3">
               {footerLinks.product.map((link) => (
                 <li key={link.label}>
-                  <Link
-                    href={link.href}
-                    className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                  <Link href={link.href} className="text-sm text-muted-foreground hover:text-foreground transition-colors">
                     {link.label}
                   </Link>
                 </li>
@@ -64,17 +61,14 @@ export function LandingFooter() {
             </ul>
           </div>
 
-          {/* Community Links */}
           <div>
             <h4 className="text-xs uppercase tracking-wider text-muted-foreground font-semibold mb-4">
-              Community
+              {t("landing.footer.community")}
             </h4>
             <ul className="space-y-3">
               {footerLinks.community.map((link) => (
                 <li key={link.label}>
-                  <Link
-                    href={link.href}
-                    className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                  <Link href={link.href} className="text-sm text-muted-foreground hover:text-foreground transition-colors">
                     {link.label}
                   </Link>
                 </li>
@@ -82,17 +76,14 @@ export function LandingFooter() {
             </ul>
           </div>
 
-          {/* Support Links */}
           <div>
             <h4 className="text-xs uppercase tracking-wider text-muted-foreground font-semibold mb-4">
-              Support
+              {t("landing.footer.support")}
             </h4>
             <ul className="space-y-3">
               {footerLinks.support.map((link) => (
                 <li key={link.label}>
-                  <Link
-                    href={link.href}
-                    className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                  <Link href={link.href} className="text-sm text-muted-foreground hover:text-foreground transition-colors">
                     {link.label}
                   </Link>
                 </li>
@@ -103,7 +94,7 @@ export function LandingFooter() {
 
         <div className="pt-8 border-t border-border">
           <p className="text-sm text-center text-muted-foreground">
-            © 2026 SkillForge. Designed for world-class engineering teams.
+            {t("landing.footer.copyright")}
           </p>
         </div>
       </div>

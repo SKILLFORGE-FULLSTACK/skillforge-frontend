@@ -21,6 +21,7 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { PageLoader } from "@/components/ui/page-loader";
 
 export default function CandidateProfilePage({
   params,
@@ -37,11 +38,7 @@ export default function CandidateProfilePage({
   const [message, setMessage] = useState("");
 
   if (isLoading) {
-    return (
-      <div className="flex-1 flex items-center justify-center">
-        <Loader2 className="w-10 h-10 animate-spin text-primary" />
-      </div>
-    );
+    return <PageLoader fullScreen />;
   }
 
   if (error || !data) {

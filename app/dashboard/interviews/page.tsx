@@ -1,5 +1,10 @@
-import { InterviewsListContent } from "@/components/dashboard"
+import { DashboardHeader, InterviewsListContent } from "@/components/dashboard"
 
 export default function InterviewsPage() {
-  return <InterviewsListContent />
+  return (
+    <>
+      <DashboardHeader />
+      <InterviewsListContent />
+    </>
+  )
 }

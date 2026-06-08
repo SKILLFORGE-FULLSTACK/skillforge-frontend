@@ -32,15 +32,14 @@ export interface Submission {
 
 export const certificationsApi = {
   list: async (): Promise<Certification[]> => {
-    const { data } = await apiClient.get<{ certifications: Certification[] }>("/certifications");
-    return data.certifications;
+    const { data } = await apiClient.get("/certifications");
+    const raw = data.certifications ?? data.data ?? data;
+    return Array.isArray(raw) ? (raw as Certification[]) : [];
   },
 
   show: async (slug: string): Promise<CertificationDetail> => {
-    const { data } = await apiClient.get<{ certification: CertificationDetail }>(
-      `/certifications/${slug}`
-    );
-    return data.certification;
+    const { data } = await apiClient.get(`/certifications/${slug}`);
+    return (data.certification ?? data) as CertificationDetail;
   },
 
   start: async (slug: string): Promise<Submission> => {
@@ -51,17 +50,20 @@ export const certificationsApi = {
   },
 
   mySubmissions: async (): Promise<Submission[]> => {
-    const { data } = await apiClient.get<{ submissions: Submission[] }>(
-      "/certifications/my-submissions"
-    );
-    return data.submissions;
+    const { data } = await apiClient.get("/certifications/my-submissions");
+    const raw = data.submissions ?? data.data ?? data;
+    return Array.isArray(raw) ? (raw as Submission[]) : [];
   },
 
   submitWork: async (
     submissionId: string,
     payload: { github_url: string; live_url?: string; notes?: string }
   ) => {
-    const { data } = await apiClient.post(`/submissions/${submissionId}/submit`, payload);
+    const { data } = await apiClient.post(`/submissions/${submissionId}/submit`, {
+      github_repo_url: payload.github_url,
+      live_url: payload.live_url,
+      notes: payload.notes,
+    });
     return data;
   },
 

@@ -1,5 +1,13 @@
-import { CertificationsListContent } from "@/components/dashboard"
+import {
+  CertificationsListContent,
+  DashboardHeader,
+} from "@/components/dashboard";
 
 export default function CertificationsPage() {
-  return <CertificationsListContent />
+  return (
+    <>
+      <DashboardHeader />
+      <CertificationsListContent />
+    </>
+  );
 }

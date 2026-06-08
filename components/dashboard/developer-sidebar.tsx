@@ -8,42 +8,45 @@ import {
   LayoutDashboard,
   MessageSquare,
   Award,
-  Users,
   Settings,
   HelpCircle,
   Plus,
   Trophy,
   TrendingUp,
   LogOut,
+  Users,
 } from "lucide-react";
 import { useAuth } from "@/lib/hooks/useAuth";
-
-const navigation = [
-  { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard, exact: true },
-  { name: "Interviews", href: "/dashboard/interviews", icon: MessageSquare },
-  { name: "Certifications", href: "/dashboard/certifications", icon: Award },
-  { name: "Progression", href: "/dashboard/progress", icon: TrendingUp },
-  { name: "Leaderboard", href: "/dashboard/leaderboard", icon: Trophy },
-  { name: "Forum", href: "/dashboard/forum", icon: Users },
-];
-
-const bottomNav = [
-  { name: "Settings", href: "/dashboard/settings", icon: Settings },
-  { name: "Support", href: "/dashboard/support", icon: HelpCircle },
-];
+import { useState } from "react";
+import { ConfirmDialog } from "@/components/ui/confirm-dialog";
+import { useT } from "@/lib/i18n/useTranslation";
 
 export function DeveloperSidebar() {
   const pathname = usePathname();
   const { logout } = useAuth();
+  const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
+  const { t } = useT();
+
+  const navigation = [
+    { name: t("sidebar.dashboard"), href: "/dashboard", icon: LayoutDashboard, exact: true },
+    { name: t("sidebar.interviews"), href: "/dashboard/interviews", icon: MessageSquare },
+    { name: t("sidebar.certifications"), href: "/dashboard/certifications", icon: Award },
+    { name: t("sidebar.progression"), href: "/dashboard/progress", icon: TrendingUp },
+    { name: t("sidebar.leaderboard"), href: "/dashboard/leaderboard", icon: Trophy },
+    { name: t("sidebar.forum"), href: "/dashboard/forum", icon: Users },
+  ];
+
+  const bottomNav = [
+    { name: t("sidebar.settings"), href: "/dashboard/settings", icon: Settings },
+    { name: t("sidebar.support"), href: "/dashboard/support", icon: HelpCircle },
+  ];
 
   return (
     <aside className="w-56 h-screen bg-sidebar border-r border-sidebar-border flex flex-col">
-      {/* Header */}
       <div className="p-4 border-b border-sidebar-border">
-        <Logo href="/dashboard" showSubtitle subtitle="Engineering Hub" />
+        <Logo href="/dashboard" showSubtitle subtitle="E-Hub" />
       </div>
 
-      {/* Main Navigation */}
       <nav className="flex-1 p-3 space-y-1 overflow-auto">
         {navigation.map((item) => {
           const isActive = item.exact
@@ -51,7 +54,7 @@ export function DeveloperSidebar() {
             : pathname === item.href || pathname.startsWith(item.href + "/");
           return (
             <Link
-              key={item.name}
+              key={item.href}
               href={item.href}
               className={cn(
                 "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors",
@@ -66,21 +69,19 @@ export function DeveloperSidebar() {
         })}
       </nav>
 
-      {/* New Interview Button */}
       <div className="px-3 pb-2">
         <Link
           href="/dashboard/interviews"
           className="flex items-center justify-center gap-2 w-full px-4 py-2.5 bg-primary text-primary-foreground rounded-lg text-sm font-medium hover:bg-primary/90 transition-colors">
           <Plus className="w-4 h-4" />
-          New Interview
+          {t("sidebar.newInterview")}
         </Link>
       </div>
 
-      {/* Bottom Navigation */}
       <div className="p-3 border-t border-sidebar-border space-y-1">
         {bottomNav.map((item) => (
           <Link
-            key={item.name}
+            key={item.href}
             href={item.href}
             className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground transition-colors">
             <item.icon className="w-5 h-5" />
@@ -88,12 +89,23 @@ export function DeveloperSidebar() {
           </Link>
         ))}
         <button
-          onClick={() => logout()}
+          onClick={() => setShowLogoutConfirm(true)}
           className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-destructive transition-colors">
           <LogOut className="w-5 h-5" />
-          Déconnexion
+          {t("sidebar.logout")}
         </button>
       </div>
+
+      <ConfirmDialog
+        open={showLogoutConfirm}
+        onOpenChange={setShowLogoutConfirm}
+        title={t("header.confirmLogout")}
+        description={t("header.confirmLogoutDesc")}
+        confirmLabel={t("header.doLogout")}
+        cancelLabel={t("header.cancel")}
+        variant="destructive"
+        onConfirm={logout}
+      />
     </aside>
   );
 }

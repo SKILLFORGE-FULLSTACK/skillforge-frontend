@@ -1,12 +1,16 @@
 "use client"
 
 import Link from "next/link"
-import { Menu, X, Sun, Moon, Globe } from "lucide-react"
+import { Menu, X } from "lucide-react"
 import { useState } from "react"
 import { Logo } from "@/components/skillforge"
+import { useT } from "@/lib/i18n/useTranslation"
+import { LocaleToggle } from "@/components/ui/locale-toggle"
+import { ThemeToggle } from "@/components/ui/theme-toggle"
 
 export function LandingHeader() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const { t, locale, setLocale } = useT()
 
   return (
     <header className="sticky top-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
@@ -16,30 +20,25 @@ export function LandingHeader() {
             <Logo href="/" />
             <div className="hidden md:flex items-center gap-6">
               <Link href="#solutions" className="text-sm font-medium text-foreground hover:text-primary transition-colors">
-                Solutions
+                {t("nav.solutions")}
               </Link>
               <Link href="#pricing" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
-                Pricing
+                {t("nav.pricing")}
               </Link>
               <Link href="#enterprise" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
-                Enterprise
+                {t("nav.enterprise")}
               </Link>
             </div>
           </div>
 
           <div className="hidden md:flex items-center gap-4">
-            <div className="flex items-center gap-2 px-2 py-1 rounded-lg bg-secondary text-xs">
-              <span className="text-muted-foreground">FR</span>
-              <span className="text-foreground font-medium bg-card px-1.5 py-0.5 rounded">EN</span>
-            </div>
-            <button className="p-2 rounded-lg hover:bg-secondary transition-colors">
-              <Sun className="w-4 h-4 text-muted-foreground" />
-            </button>
+            <LocaleToggle />
+            <ThemeToggle />
             <Link href="/login" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
-              Sign In
+              {t("nav.signIn")}
             </Link>
             <Link href="/dashboard" className="px-4 py-2 text-sm font-medium bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors">
-              Demo
+              {t("nav.demo")}
             </Link>
           </div>
 
@@ -54,13 +53,14 @@ export function LandingHeader() {
         {mobileMenuOpen && (
           <div className="md:hidden py-4 border-t border-border">
             <div className="flex flex-col gap-4">
-              <Link href="#solutions" className="text-sm font-medium text-foreground">Solutions</Link>
-              <Link href="#pricing" className="text-sm font-medium text-muted-foreground">Pricing</Link>
-              <Link href="#enterprise" className="text-sm font-medium text-muted-foreground">Enterprise</Link>
+              <Link href="#solutions" className="text-sm font-medium text-foreground">{t("nav.solutions")}</Link>
+              <Link href="#pricing" className="text-sm font-medium text-muted-foreground">{t("nav.pricing")}</Link>
+              <Link href="#enterprise" className="text-sm font-medium text-muted-foreground">{t("nav.enterprise")}</Link>
               <hr className="border-border" />
-              <Link href="/login" className="text-sm font-medium text-muted-foreground">Sign In</Link>
+              <LocaleToggle />
+              <Link href="/login" className="text-sm font-medium text-muted-foreground">{t("nav.signIn")}</Link>
               <Link href="/dashboard" className="px-4 py-2 text-sm font-medium bg-primary text-primary-foreground rounded-lg text-center">
-                Demo
+                {t("nav.demo")}
               </Link>
             </div>
           </div>

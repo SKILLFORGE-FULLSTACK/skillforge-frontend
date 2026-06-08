@@ -54,6 +54,13 @@ export const interviewApi = {
     return data.report;
   },
 
+  getSession: async (sessionId: string): Promise<InterviewSession> => {
+    const { data } = await apiClient.get<{ session: InterviewSession }>(
+      `/interviews/${sessionId}`,
+    );
+    return data.session;
+  },
+
   getHistory: async (params?: {
     type?: string;
     status?: string;

@@ -76,6 +76,15 @@ export function useInterview() {
     onError: () => toast.error("Erreur lors de la finalisation"),
   });
 
+  const resumeMutation = useMutation({
+    mutationFn: (sessionId: string) => interviewApi.getSession(sessionId),
+    onSuccess: (session) => {
+      setSession(session);
+      router.push("/dashboard/interviews/session");
+    },
+    onError: () => toast.error("Impossible de reprendre la session"),
+  });
+
   const useHistory = (params?: { type?: string; status?: string }) =>
     useQuery({
       queryKey: ["interviews", params],
@@ -102,6 +111,8 @@ export function useInterview() {
     isResponding: respondMutation.isPending,
     isGettingHint: hintMutation.isPending,
     isCompleting: completeMutation.isPending,
+    resumeSession: resumeMutation.mutate,
+    isResuming: resumeMutation.isPending,
     useHistory,
     useReport,
   };

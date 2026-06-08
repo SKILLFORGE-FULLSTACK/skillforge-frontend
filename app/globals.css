@@ -3,61 +3,127 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* ─── LIGHT THEME (default) ─────────────────────────────────── */
 :root {
-  /* SkillForge Dark Theme - Primary */
+  /* Background — cool near-white with a blue tint */
+  --background: oklch(0.975 0.008 255);
+  --foreground: oklch(0.13 0.05 265);
+
+  /* Cards — pure white, elevated */
+  --card: oklch(1.0 0 0);
+  --card-foreground: oklch(0.13 0.05 265);
+
+  /* Popover */
+  --popover: oklch(1.0 0 0);
+  --popover-foreground: oklch(0.13 0.05 265);
+
+  /* Primary — vivid indigo-blue */
+  --primary: oklch(0.50 0.24 265);
+  --primary-foreground: oklch(0.98 0 0);
+
+  /* Secondary — light blue-gray */
+  --secondary: oklch(0.92 0.03 255);
+  --secondary-foreground: oklch(0.22 0.07 265);
+
+  /* Muted */
+  --muted: oklch(0.94 0.015 258);
+  --muted-foreground: oklch(0.50 0.05 265);
+
+  /* Accent — teal/cyan (brand) */
+  --accent: oklch(0.52 0.15 195);
+  --accent-foreground: oklch(0.98 0 0);
+
+  /* Success */
+  --success: oklch(0.55 0.18 145);
+  --success-foreground: oklch(0.98 0 0);
+
+  /* Warning */
+  --warning: oklch(0.65 0.18 75);
+  --warning-foreground: oklch(0.13 0.02 260);
+
+  /* Destructive */
+  --destructive: oklch(0.52 0.22 25);
+  --destructive-foreground: oklch(0.98 0 0);
+
+  /* Borders & inputs */
+  --border: oklch(0.87 0.025 258);
+  --input: oklch(0.93 0.02 258);
+  --ring: oklch(0.50 0.24 265);
+
+  /* Charts */
+  --chart-1: oklch(0.50 0.24 265);
+  --chart-2: oklch(0.52 0.15 195);
+  --chart-3: oklch(0.55 0.18 145);
+  --chart-4: oklch(0.65 0.18 75);
+  --chart-5: oklch(0.52 0.22 25);
+
+  --radius: 0.625rem;
+
+  /* Sidebar — deep navy creates the dramatic blue/white split */
+  --sidebar: oklch(0.19 0.09 265);
+  --sidebar-foreground: oklch(0.90 0.01 260);
+  --sidebar-primary: oklch(0.55 0.22 265);
+  --sidebar-primary-foreground: oklch(0.98 0 0);
+  --sidebar-accent: oklch(0.27 0.08 265);
+  --sidebar-accent-foreground: oklch(0.93 0.01 260);
+  --sidebar-border: oklch(0.30 0.07 265);
+  --sidebar-ring: oklch(0.55 0.22 265);
+}
+
+/* ─── DARK THEME ─────────────────────────────────────────────── */
+.dark {
+  /* Background */
   --background: oklch(0.13 0.02 260);
   --foreground: oklch(0.95 0.01 260);
-  
+
   /* Cards */
   --card: oklch(0.18 0.025 260);
   --card-foreground: oklch(0.95 0.01 260);
-  
+
   /* Popover */
   --popover: oklch(0.15 0.02 260);
   --popover-foreground: oklch(0.95 0.01 260);
-  
-  /* Primary - Indigo/Blue accent */
+
+  /* Primary — indigo/blue */
   --primary: oklch(0.65 0.2 265);
   --primary-foreground: oklch(0.98 0 0);
-  
+
   /* Secondary */
   --secondary: oklch(0.22 0.03 260);
   --secondary-foreground: oklch(0.9 0.01 260);
-  
+
   /* Muted */
   --muted: oklch(0.25 0.02 260);
   --muted-foreground: oklch(0.65 0.02 260);
-  
-  /* Accent - Cyan/Teal */
+
+  /* Accent — cyan/teal */
   --accent: oklch(0.7 0.15 195);
   --accent-foreground: oklch(0.15 0.02 260);
-  
-  /* Success - Green */
+
+  /* Success */
   --success: oklch(0.7 0.18 145);
   --success-foreground: oklch(0.15 0.02 260);
-  
-  /* Warning - Orange/Amber */
+
+  /* Warning */
   --warning: oklch(0.75 0.18 75);
   --warning-foreground: oklch(0.15 0.02 260);
-  
+
   /* Destructive */
   --destructive: oklch(0.6 0.22 25);
   --destructive-foreground: oklch(0.98 0 0);
-  
-  /* Border */
+
+  /* Borders & inputs */
   --border: oklch(0.28 0.03 260);
   --input: oklch(0.22 0.025 260);
   --ring: oklch(0.65 0.2 265);
-  
+
   /* Charts */
   --chart-1: oklch(0.65 0.2 265);
   --chart-2: oklch(0.7 0.15 195);
   --chart-3: oklch(0.7 0.18 145);
   --chart-4: oklch(0.75 0.18 75);
   --chart-5: oklch(0.6 0.22 25);
-  
-  --radius: 0.625rem;
-  
+
   /* Sidebar */
   --sidebar: oklch(0.15 0.025 260);
   --sidebar-foreground: oklch(0.9 0.01 260);
@@ -70,8 +136,8 @@
 }
 
 @theme inline {
-  --font-sans: 'Geist', 'Geist Fallback', system-ui, sans-serif;
-  --font-mono: 'Geist Mono', 'Geist Mono Fallback', monospace;
+  --font-sans: var(--font-text-me-one), 'Text Me One', sans-serif;
+  --font-mono: var(--font-michroma), 'Michroma', monospace;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -120,5 +186,7 @@
   }
   body {
     @apply bg-background text-foreground;
+    /* Smooth theme transition */
+    transition: background-color 0.2s ease, color 0.2s ease;
   }
 }

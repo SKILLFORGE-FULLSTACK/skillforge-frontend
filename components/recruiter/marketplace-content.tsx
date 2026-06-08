@@ -1,6 +1,7 @@
 "use client";
 
 import { Search, SlidersHorizontal, X, Bookmark, BookmarkCheck, Loader2, AlertCircle, MessageSquare } from "lucide-react";
+import { PageLoader } from "@/components/ui/page-loader";
 import { SkillBadge } from "@/components/skillforge";
 import { useState } from "react";
 import { useDevelopers, useSaveProfile, useUnsaveProfile, useContactDeveloper } from "@/lib/hooks/useMarketplace";
@@ -97,12 +98,7 @@ export function MarketplaceContent() {
             </div>
           ) : null}
 
-          {/* Loading */}
-          {isLoading && (
-            <div className="flex items-center justify-center py-20">
-              <Loader2 className="w-8 h-8 animate-spin text-primary" />
-            </div>
-          )}
+          {isLoading && <PageLoader />}
 
           {/* Error */}
           {error && (

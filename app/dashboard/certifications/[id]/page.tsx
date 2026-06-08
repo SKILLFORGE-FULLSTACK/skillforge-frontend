@@ -10,7 +10,8 @@ import {
   SubmissionForm,
 } from "@/components/certifications";
 import { useCertification, useMySubmissions, useStartCertification } from "@/lib/hooks/useCertifications";
-import { Loader2, AlertCircle } from "lucide-react";
+import { AlertCircle, Loader2 } from "lucide-react";
+import { PageLoader } from "@/components/ui/page-loader";
 import { Button } from "@/components/ui/button";
 
 export default function CertificationDetailsPage({
@@ -29,8 +30,8 @@ export default function CertificationDetailsPage({
     return (
       <>
         <DashboardHeader />
-        <main className="flex-1 overflow-auto p-6 flex items-center justify-center">
-          <Loader2 className="w-10 h-10 animate-spin text-primary" />
+        <main className="flex-1 overflow-auto">
+          <PageLoader fullScreen />
         </main>
       </>
     );
@@ -109,11 +110,11 @@ export default function CertificationDetailsPage({
 
             <EvaluationCriteria
               criteria={
-                cert.evaluation_criteria?.map((c) => ({
+                (Array.isArray(cert.evaluation_criteria) ? cert.evaluation_criteria : []).map((c) => ({
                   name: c.name,
                   weight: c.weight,
                   variant: "primary" as const,
-                })) ?? []
+                }))
               }
             />
           </div>

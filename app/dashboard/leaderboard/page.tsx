@@ -3,19 +3,22 @@
 import { DashboardHeader } from "@/components/dashboard";
 import { useLeaderboard } from "@/lib/hooks/useStats";
 import { useAuthStore } from "@/lib/stores/authStore";
-import { Loader2, Trophy, Medal, Star } from "lucide-react";
+import { Trophy, Medal, Star } from "lucide-react";
+import { PageLoader } from "@/components/ui/page-loader";
 import { useState } from "react";
-
-const PERIODS = [
-  { label: "Cette semaine", value: "weekly" },
-  { label: "Ce mois", value: "monthly" },
-  { label: "Tout temps", value: "all_time" },
-];
+import { useT } from "@/lib/i18n/useTranslation";
 
 export default function LeaderboardPage() {
   const [period, setPeriod] = useState("weekly");
   const { data, isLoading } = useLeaderboard({ period });
   const currentUser = useAuthStore((s) => s.user);
+  const { t } = useT();
+
+  const PERIODS = [
+    { label: t("leaderboard.weekly"), value: "weekly" },
+    { label: t("leaderboard.monthly"), value: "monthly" },
+    { label: t("leaderboard.allTime"), value: "all_time" },
+  ];
 
   const entries = data?.leaderboard ?? data?.data ?? [];
 
@@ -28,9 +31,9 @@ export default function LeaderboardPage() {
             <div>
               <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
                 <Trophy className="w-6 h-6 text-warning" />
-                Leaderboard
+                {t("leaderboard.title")}
               </h1>
-              <p className="text-muted-foreground">Les meilleurs développeurs de la plateforme</p>
+              <p className="text-muted-foreground">{t("leaderboard.subtitle")}</p>
             </div>
             <div className="flex gap-2">
               {PERIODS.map((p) => (
@@ -49,15 +52,13 @@ export default function LeaderboardPage() {
           </div>
 
           {isLoading ? (
-            <div className="flex items-center justify-center py-20">
-              <Loader2 className="w-8 h-8 animate-spin text-primary" />
-            </div>
+            <PageLoader />
           ) : (
             <div className="space-y-2">
               {entries.length === 0 ? (
                 <div className="text-center py-16 text-muted-foreground">
                   <Trophy className="w-12 h-12 mx-auto mb-3 opacity-30" />
-                  <p>Aucune donnée disponible pour cette période.</p>
+                  <p>{t("leaderboard.empty")}</p>
                 </div>
               ) : (
                 entries.map((entry: any, index: number) => {
@@ -77,7 +78,6 @@ export default function LeaderboardPage() {
                           ? "bg-primary/10 border-primary/30"
                           : "bg-card border-border hover:border-primary/20"
                       }`}>
-                      {/* Rank */}
                       <div className="w-10 text-center shrink-0">
                         {rank === 1 ? (
                           <Trophy className="w-6 h-6 text-warning mx-auto" />
@@ -90,18 +90,16 @@ export default function LeaderboardPage() {
                         )}
                       </div>
 
-                      {/* Avatar */}
                       <div className="w-10 h-10 rounded-lg bg-primary/20 flex items-center justify-center text-foreground font-semibold shrink-0">
                         {name.charAt(0)}
                       </div>
 
-                      {/* Info */}
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2">
                           <span className="font-semibold text-foreground truncate">{name}</span>
                           {isMe && (
                             <span className="text-xs px-1.5 py-0.5 bg-primary/20 text-primary rounded">
-                              Vous
+                              {t("leaderboard.you")}
                             </span>
                           )}
                         </div>
@@ -110,10 +108,9 @@ export default function LeaderboardPage() {
                         </span>
                       </div>
 
-                      {/* Score */}
                       <div className="text-right shrink-0">
                         <div className="text-xl font-bold text-foreground">{score}</div>
-                        <div className="text-xs text-muted-foreground">score</div>
+                        <div className="text-xs text-muted-foreground">{t("leaderboard.score")}</div>
                       </div>
                     </div>
                   );

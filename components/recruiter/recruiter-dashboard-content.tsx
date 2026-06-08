@@ -2,6 +2,7 @@
 
 import { StatCard } from "@/components/skillforge";
 import { Users, MessageSquare, Briefcase, Plus, Eye, MoreVertical, Loader2, AlertCircle } from "lucide-react";
+import { SectionLoader } from "@/components/ui/page-loader";
 import { useJobs, useCreateJob } from "@/lib/hooks/useMarketplace";
 import { useAuthStore } from "@/lib/stores/authStore";
 import { useState } from "react";
@@ -107,9 +108,7 @@ export function RecruiterDashboardContent() {
         </div>
 
         {jobsLoading ? (
-          <div className="flex items-center justify-center py-8">
-            <Loader2 className="w-6 h-6 animate-spin text-primary" />
-          </div>
+          <SectionLoader size={48} />
         ) : jobsData?.data.length === 0 ? (
           <div className="text-center py-8 text-muted-foreground">
             <Briefcase className="w-10 h-10 mx-auto mb-2 opacity-30" />

@@ -2,6 +2,7 @@
 
 import { ScoreCircle, ContributionHeatmap, ProgressBar } from "@/components/skillforge";
 import { Play, RotateCcw, Zap, ArrowRight, Loader2 } from "lucide-react";
+import { SectionLoader } from "@/components/ui/page-loader";
 import { useMyStats, useActivityHeatmap } from "@/lib/hooks/useStats";
 import { useQuery } from "@tanstack/react-query";
 import { interviewApi } from "@/lib/api";
@@ -37,9 +38,7 @@ export function DashboardContent() {
             GLOBAL SKILL SCORE
           </h3>
           {statsLoading ? (
-            <div className="flex items-center justify-center h-40">
-              <Loader2 className="w-8 h-8 animate-spin text-primary" />
-            </div>
+            <SectionLoader />
           ) : (
             <ScoreCircle
               score={globalScore}
@@ -120,9 +119,7 @@ export function DashboardContent() {
         {/* Contribution Heatmap */}
         <div className="lg:col-span-2 bg-card border border-border rounded-xl p-6">
           {activityLoading ? (
-            <div className="flex items-center justify-center h-32">
-              <Loader2 className="w-6 h-6 animate-spin text-primary" />
-            </div>
+            <SectionLoader size={48} />
           ) : (
             <ContributionHeatmap data={activityData.length > 0 ? activityData : generateEmptyActivity()} />
           )}
@@ -136,7 +133,7 @@ export function DashboardContent() {
           <div className="space-y-3">
             <button
               onClick={() =>
-                startSession({ type: "technical", difficulty: "medium", mode: "standard" })
+                startSession({ type: "algo", difficulty: "medium", mode: "practice" })
               }
               disabled={isStarting}
               className="w-full flex items-center gap-3 px-4 py-3 border border-border rounded-lg hover:bg-secondary transition-colors text-left disabled:opacity-50">
@@ -190,7 +187,7 @@ export function DashboardContent() {
               <p className="text-sm">Pas encore d'interviews. Démarrez votre premier mock interview !</p>
               <button
                 onClick={() =>
-                  startSession({ type: "technical", difficulty: "medium", mode: "standard" })
+                  startSession({ type: "algo", difficulty: "medium", mode: "practice" })
                 }
                 disabled={isStarting}
                 className="mt-3 px-4 py-2 bg-primary text-primary-foreground rounded-lg text-sm font-medium hover:bg-primary/90 disabled:opacity-50">

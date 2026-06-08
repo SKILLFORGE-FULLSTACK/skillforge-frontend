@@ -33,10 +33,13 @@ export const useInterviewStore = create<InterviewState>((set) => ({
   setQuestion: (question) => set({ currentQuestion: question }),
 
   setResult: (result) =>
-    set({
+    set((state) => ({
       lastResult: result,
       currentQuestion: result.next_question ?? null,
-    }),
+      currentSession: state.currentSession
+        ? { ...state.currentSession, progress: result.progress }
+        : null,
+    })),
 
   setLoading: (loading) => set({ isLoading: loading }),
   setSubmitting: (submitting) => set({ isSubmitting: submitting }),

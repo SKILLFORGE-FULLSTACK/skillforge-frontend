@@ -58,11 +58,15 @@ export interface ExecutionResult {
   success: boolean;
 }
 
+export type InterviewType = "algo" | "system_design" | "behavioral" | "code_review" | "debug" | "tech_stack" | "live_coding";
+export type InterviewMode = "practice" | "mock" | "company_sim";
+export type InterviewDifficulty = "easy" | "medium" | "hard" | "expert";
+
 export interface StartInterviewPayload {
-  type: string;
-  difficulty?: string;
+  type: InterviewType;
+  difficulty?: InterviewDifficulty;
   stack_focus?: string;
   company_target?: string;
-  duration_min?: number;
-  mode?: string;
+  duration_min?: 20 | 30 | 45 | 60;
+  mode?: InterviewMode;
 }
