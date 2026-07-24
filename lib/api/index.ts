@@ -1,5 +1,8 @@
-export { authApi } from "./auth";
+export { authApi, getOAuthRedirectUrl } from "./auth";
+export type { OAuthProvider } from "./auth";
 export { interviewApi } from "./interviews";
+export { interviewCategoriesApi } from "./interviewCategories";
+export { voiceInterviewApi } from "./voiceInterview";
 export { marketplaceApi } from "./marketplace";
 export { certificationsApi } from "./certifications";
 export { statsApi } from "./stats";

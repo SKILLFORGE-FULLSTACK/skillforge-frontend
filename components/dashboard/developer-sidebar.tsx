@@ -15,6 +15,8 @@ import {
   TrendingUp,
   LogOut,
   Users,
+  Briefcase,
+  ShieldCheck,
 } from "lucide-react";
 import { useAuth } from "@/lib/hooks/useAuth";
 import { useState } from "react";
@@ -23,17 +25,21 @@ import { useT } from "@/lib/i18n/useTranslation";
 
 export function DeveloperSidebar() {
   const pathname = usePathname();
-  const { logout } = useAuth();
+  const { logout, user } = useAuth();
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
   const { t } = useT();
 
   const navigation = [
     { name: t("sidebar.dashboard"), href: "/dashboard", icon: LayoutDashboard, exact: true },
     { name: t("sidebar.interviews"), href: "/dashboard/interviews", icon: MessageSquare },
+    { name: t("sidebar.jobs"), href: "/dashboard/jobs", icon: Briefcase },
     { name: t("sidebar.certifications"), href: "/dashboard/certifications", icon: Award },
     { name: t("sidebar.progression"), href: "/dashboard/progress", icon: TrendingUp },
     { name: t("sidebar.leaderboard"), href: "/dashboard/leaderboard", icon: Trophy },
     { name: t("sidebar.forum"), href: "/dashboard/forum", icon: Users },
+    ...(user?.role === "admin"
+      ? [{ name: t("sidebar.admin"), href: "/dashboard/admin/interview-categories", icon: ShieldCheck }]
+      : []),
   ];
 
   const bottomNav = [

@@ -1,6 +1,8 @@
 export * from "./auth";
 export * from "./interview";
+export * from "./interviewCategory";
 export * from "./marketplace";
+export * from "./voiceInterview";
 
 export interface PaginatedResponse<T> {
   data: T[];

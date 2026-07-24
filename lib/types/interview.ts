@@ -58,7 +58,9 @@ export interface ExecutionResult {
   success: boolean;
 }
 
-export type InterviewType = "algo" | "system_design" | "behavioral" | "code_review" | "debug" | "tech_stack" | "live_coding";
+// Les catégories d'entretien sont gérées dynamiquement (voir InterviewCategory) — la clé
+// de catégorie sert directement de "type", donc pas d'union figée ici.
+export type InterviewType = string;
 export type InterviewMode = "practice" | "mock" | "company_sim";
 export type InterviewDifficulty = "easy" | "medium" | "hard" | "expert";
 
