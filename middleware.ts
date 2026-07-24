@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const PUBLIC_ROUTES = ["/login", "/register", "/", "/verify", "/u"];
+const PUBLIC_ROUTES = ["/login", "/register", "/", "/verify", "/u", "/auth/callback", "/privacy", "/terms"];
 const RECRUITER_ROUTES = ["/recruiter"];
 const DEVELOPER_ROUTES = [
   "/dashboard",

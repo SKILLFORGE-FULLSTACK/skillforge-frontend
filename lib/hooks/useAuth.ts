@@ -26,7 +26,7 @@ export function useAuth() {
 
       // Redirection selon le rôle
       if (data.user.role === "recruiter") {
-        router.push("/recruiter/dashboard");
+        router.push("/recruiter");
       } else {
         router.push("/dashboard");
       }
@@ -44,7 +44,7 @@ export function useAuth() {
       toast.success("Compte créé avec succès !");
 
       if (data.user.role === "recruiter") {
-        router.push("/recruiter/dashboard");
+        router.push("/recruiter");
       } else {
         router.push("/dashboard");
       }

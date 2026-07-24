@@ -1,4 +1,5 @@
 import axios, { AxiosError, AxiosInstance } from "axios";
+import { useLocaleStore } from "../stores/localeStore";
 
 const apiClient: AxiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
@@ -10,15 +11,17 @@ const apiClient: AxiosInstance = axios.create({
 });
 
 // ─── REQUEST INTERCEPTOR ──────────────────────────────────────
-// Ajoute le token automatiquement sur chaque requête
+// Ajoute le token et la locale sélectionnée automatiquement sur chaque requête
 apiClient.interceptors.request.use(
   (config) => {
-    // Récupérer le token depuis localStorage
     if (typeof window !== "undefined") {
       const token = localStorage.getItem("skillforge_token");
       if (token) {
         config.headers.Authorization = `Bearer ${token}`;
       }
+      // Locale UI courante (fr/en) → le backend l'utilise pour servir le
+      // contenu bilingue stocké en base (certifications, offres, questions).
+      config.headers["X-Locale"] = useLocaleStore.getState().locale;
     }
     return config;
   },
@@ -35,6 +38,7 @@ apiClient.interceptors.response.use(
       if (typeof window !== "undefined") {
         localStorage.removeItem("skillforge_token");
         localStorage.removeItem("skillforge_user");
+        document.cookie = "skillforge_token=; path=/; max-age=0";
         window.location.href = "/login";
       }
     }
