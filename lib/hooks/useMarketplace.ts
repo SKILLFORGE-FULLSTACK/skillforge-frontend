@@ -81,11 +81,20 @@ export function useJobs(filters?: {
   contract_type?: string;
   work_mode?: string;
   per_page?: number;
+  mine?: boolean;
 }) {
   return useQuery({
     queryKey: ["jobs", filters],
     queryFn: () => marketplaceApi.getJobs(filters),
     staleTime: 2 * 60 * 1000,
+  });
+}
+
+export function useJob(id: string | undefined) {
+  return useQuery({
+    queryKey: ["job", id],
+    queryFn: () => marketplaceApi.getJob(id as string),
+    enabled: !!id,
   });
 }
 

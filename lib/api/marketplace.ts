@@ -61,9 +61,16 @@ export const marketplaceApi = {
     contract_type?: string;
     work_mode?: string;
     per_page?: number;
+    /** Ne retourne que les offres du recruteur connecté (tous statuts). */
+    mine?: boolean;
   }): Promise<PaginatedResponse<JobPosting>> => {
     const { data } = await apiClient.get("/jobs", { params: filters });
     return data;
+  },
+
+  getJob: async (id: string): Promise<JobPosting> => {
+    const { data } = await apiClient.get(`/jobs/${id}`);
+    return data.job;
   },
 
   createJob: async (payload: {

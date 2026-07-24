@@ -42,18 +42,23 @@ export interface JobPosting {
   contract_type: string;
   work_mode: string;
   min_level: string | null;
+  required_skills: string[] | null;
+  required_certs: string[] | null;
   location: string | null;
   salary_min: number | null;
   salary_max: number | null;
   currency: string;
   status: string;
   views_count: number;
+  applications_count: number;
   published_at: string;
+  expires_at: string | null;
   recruiter: {
     id: string;
     name: string;
-    company_name: string;
+    company_name: string | null;
     company_logo: string | null;
+    industry: string | null;
   } | null;
 }
 
