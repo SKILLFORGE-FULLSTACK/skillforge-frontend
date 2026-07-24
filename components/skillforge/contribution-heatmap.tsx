@@ -1,6 +1,7 @@
 "use client"
 
 import { cn } from "@/lib/utils"
+import { useT } from "@/lib/i18n/useTranslation"
 
 interface ContributionDay {
   date: string
@@ -16,8 +17,9 @@ interface ContributionHeatmapProps {
 export function ContributionHeatmap({ 
   data, 
   months = ["Mar", "Apr", "May", "Jun", "Jul", "Aug"],
-  className 
+  className
 }: ContributionHeatmapProps) {
+  const { t } = useT()
   const getColorClass = (count: number) => {
     if (count === 0) return "bg-secondary/30"
     if (count <= 2) return "bg-primary/30"
@@ -41,20 +43,20 @@ export function ContributionHeatmap({
   return (
     <div className={cn("", className)}>
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-lg font-semibold text-foreground">Contribution Heatmap</h3>
+        <h3 className="text-lg font-semibold text-foreground">{t("heatmap.title")}</h3>
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-1 text-xs text-muted-foreground">
-            <span>Less</span>
+            <span>{t("heatmap.less")}</span>
             <div className="flex gap-0.5">
               <div className="w-3 h-3 rounded-sm bg-secondary/30" />
               <div className="w-3 h-3 rounded-sm bg-primary/30" />
               <div className="w-3 h-3 rounded-sm bg-primary/50" />
               <div className="w-3 h-3 rounded-sm bg-primary" />
             </div>
-            <span>More</span>
+            <span>{t("heatmap.more")}</span>
           </div>
-          <button className="px-3 py-1 text-xs border border-border rounded-md text-muted-foreground hover:bg-secondary">
-            Last 6 Months
+          <button className="px-3 py-1 text-xs border border-border rounded-md text-muted-foreground hover:bg-secondary cursor-pointer">
+            {t("heatmap.last6Months")}
           </button>
         </div>
       </div>
@@ -69,7 +71,7 @@ export function ContributionHeatmap({
                   "w-3 h-3 rounded-sm",
                   day ? getColorClass(day.count) : "bg-transparent"
                 )}
-                title={day ? `${day.date}: ${day.count} contributions` : ""}
+                title={day ? `${day.date}: ${day.count} ${t("heatmap.contributions")}` : ""}
               />
             ))}
           </div>

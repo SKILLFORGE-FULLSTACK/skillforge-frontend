@@ -1,6 +1,7 @@
 "use client"
 
 import { cn } from "@/lib/utils"
+import { useT } from "@/lib/i18n/useTranslation"
 
 interface ScoreCircleProps {
   score: number
@@ -21,6 +22,7 @@ export function ScoreCircle({
   changePercent,
   className
 }: ScoreCircleProps) {
+  const { t } = useT()
   const percentage = (score / maxScore) * 100
   const circumference = 2 * Math.PI * 45
 
@@ -73,7 +75,7 @@ export function ScoreCircle({
           changePercent >= 0 ? "text-success" : "text-destructive"
         )}>
           <span>{changePercent >= 0 ? "↗" : "↘"}</span>
-          <span>{changePercent >= 0 ? "+" : ""}{changePercent}% vs last month</span>
+          <span>{changePercent >= 0 ? "+" : ""}{changePercent}% {t("dashboard.vsLastMonth")}</span>
         </div>
       )}
     </div>

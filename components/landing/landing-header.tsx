@@ -5,12 +5,15 @@ import { Menu, X } from "lucide-react"
 import { useState } from "react"
 import { Logo } from "@/components/skillforge"
 import { useT } from "@/lib/i18n/useTranslation"
+import { useAuthStore } from "@/lib/stores/authStore"
 import { LocaleToggle } from "@/components/ui/locale-toggle"
 import { ThemeToggle } from "@/components/ui/theme-toggle"
 
 export function LandingHeader() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const { t, locale, setLocale } = useT()
+  const { isAuthenticated, user } = useAuthStore()
+  const dashboardHref = user?.role === "recruiter" ? "/recruiter" : "/dashboard"
 
   return (
     <header className="sticky top-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
@@ -22,9 +25,6 @@ export function LandingHeader() {
               <Link href="#solutions" className="text-sm font-medium text-foreground hover:text-primary transition-colors">
                 {t("nav.solutions")}
               </Link>
-              <Link href="#pricing" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
-                {t("nav.pricing")}
-              </Link>
               <Link href="#enterprise" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
                 {t("nav.enterprise")}
               </Link>
@@ -34,12 +34,20 @@ export function LandingHeader() {
           <div className="hidden md:flex items-center gap-4">
             <LocaleToggle />
             <ThemeToggle />
-            <Link href="/login" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
-              {t("nav.signIn")}
-            </Link>
-            <Link href="/dashboard" className="px-4 py-2 text-sm font-medium bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors">
-              {t("nav.demo")}
-            </Link>
+            {isAuthenticated ? (
+              <Link href={dashboardHref} className="px-4 py-2 text-sm font-medium bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors">
+                {t("nav.dashboard")}
+              </Link>
+            ) : (
+              <>
+                <Link href="/login" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
+                  {t("nav.signIn")}
+                </Link>
+                <Link href="/register" className="px-4 py-2 text-sm font-medium bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors">
+                  {t("nav.getStarted")}
+                </Link>
+              </>
+            )}
           </div>
 
           <button
@@ -54,14 +62,21 @@ export function LandingHeader() {
           <div className="md:hidden py-4 border-t border-border">
             <div className="flex flex-col gap-4">
               <Link href="#solutions" className="text-sm font-medium text-foreground">{t("nav.solutions")}</Link>
-              <Link href="#pricing" className="text-sm font-medium text-muted-foreground">{t("nav.pricing")}</Link>
               <Link href="#enterprise" className="text-sm font-medium text-muted-foreground">{t("nav.enterprise")}</Link>
               <hr className="border-border" />
               <LocaleToggle />
-              <Link href="/login" className="text-sm font-medium text-muted-foreground">{t("nav.signIn")}</Link>
-              <Link href="/dashboard" className="px-4 py-2 text-sm font-medium bg-primary text-primary-foreground rounded-lg text-center">
-                {t("nav.demo")}
-              </Link>
+              {isAuthenticated ? (
+                <Link href={dashboardHref} className="px-4 py-2 text-sm font-medium bg-primary text-primary-foreground rounded-lg text-center">
+                  {t("nav.dashboard")}
+                </Link>
+              ) : (
+                <>
+                  <Link href="/login" className="text-sm font-medium text-muted-foreground">{t("nav.signIn")}</Link>
+                  <Link href="/register" className="px-4 py-2 text-sm font-medium bg-primary text-primary-foreground rounded-lg text-center">
+                    {t("nav.getStarted")}
+                  </Link>
+                </>
+              )}
             </div>
           </div>
         )}

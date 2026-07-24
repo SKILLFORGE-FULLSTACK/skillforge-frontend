@@ -1,13 +1,22 @@
 "use client";
 
+import Link from "next/link"
 import { Code2, Award, CheckCircle } from "lucide-react"
 import { useT } from "@/lib/i18n/useTranslation"
+import { useAuthStore } from "@/lib/stores/authStore"
 
 export function FeaturesSection() {
   const { t } = useT()
+  const { isAuthenticated, user } = useAuthStore()
+
+  const marketplaceHref = !isAuthenticated
+    ? "/register?role=recruiter"
+    : user?.role === "recruiter"
+      ? "/recruiter/marketplace"
+      : "/dashboard"
 
   return (
-    <section className="py-20 lg:py-32">
+    <section id="solutions" className="py-20 lg:py-32">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 className="text-3xl lg:text-4xl font-bold text-foreground mb-12">
           {t("landing.features.title")}
@@ -71,7 +80,7 @@ export function FeaturesSection() {
         </div>
 
         {/* Marketplace Section */}
-        <div className="mt-8 bg-card border border-border rounded-xl overflow-hidden">
+        <div id="enterprise" className="mt-8 bg-card border border-border rounded-xl overflow-hidden">
           <div className="lg:flex">
             <div className="lg:w-1/2 aspect-video lg:aspect-auto bg-secondary/30">
               <MarketplacePreview />
@@ -88,12 +97,14 @@ export function FeaturesSection() {
               <p className="text-muted-foreground mb-6">
                 {t("landing.features.marketplace.description")}
               </p>
-              <button className="w-fit px-6 py-3 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 transition-colors flex items-center gap-2">
+              <Link
+                href={marketplaceHref}
+                className="w-fit px-6 py-3 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 transition-colors flex items-center gap-2">
                 {t("landing.features.marketplace.cta")}
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                 </svg>
-              </button>
+              </Link>
             </div>
           </div>
         </div>
