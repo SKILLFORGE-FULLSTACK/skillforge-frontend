@@ -347,7 +347,7 @@ const fr = {
     selectJobPlaceholder: "Sélectionner une offre d'emploi",
     noJobsAvailable: "Aucune offre disponible pour le moment.",
     languageNotice:
-      "Cet entretien se déroule en anglais pour le moment — la voix de l'IA (questions et relances) n'est pas encore disponible en français (limitation du fournisseur vocal). Le français arrivera dès qu'une voix sera disponible.",
+      "L'IA vous parle dans la langue actuellement sélectionnée pour l'interface (français ou anglais).",
     starting: "Démarrage...",
     start: "Démarrer l'entretien vocal",
     turnLabel: "Tour",
@@ -760,7 +760,7 @@ const en: typeof fr = {
     selectJobPlaceholder: "Select a job posting",
     noJobsAvailable: "No jobs available right now.",
     languageNotice:
-      "This interview currently runs in English — the AI voice (questions and follow-ups) isn't available in French yet (voice provider limitation). French will be added as soon as a voice becomes available.",
+      "The AI speaks to you in whichever language is currently selected for the interface (French or English).",
     starting: "Starting...",
     start: "Start Voice Interview",
     turnLabel: "Turn",

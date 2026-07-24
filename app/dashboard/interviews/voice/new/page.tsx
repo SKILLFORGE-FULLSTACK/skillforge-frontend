@@ -23,16 +23,16 @@ type EntryMode = "practice" | "job_interview";
 
 function NewVoiceInterviewPageContent() {
   const router = useRouter();
-  const { t } = useT();
+  const { t, locale } = useT();
   const searchParams = useSearchParams();
   const preselectedJobId = searchParams.get("job_posting_id") ?? "";
   const { startRoom, isStarting } = useVoiceInterview();
 
   const [entryMode, setEntryMode] = useState<EntryMode>(preselectedJobId ? "job_interview" : "practice");
   const [jobPostingId, setJobPostingId] = useState<string>(preselectedJobId);
-  // La voix IA (Groq) ne supporte pour l'instant que l'anglais et l'arabe —
-  // pas de français disponible. On force l'anglais tant que ça n'a pas changé.
-  const language = "en" as const;
+  // La voix de l'IA suit la langue actuelle de l'interface (fr → Piper,
+  // en → Groq — voir VoiceInterviewService::synthesizeAndStore côté backend).
+  const language = locale;
 
   const { data: preselectedJob } = useJob(preselectedJobId || undefined);
 
