@@ -219,6 +219,9 @@ const fr = {
     continue: "Continuer",
     start: "Commencer",
     notFound: "Aucune certification trouvée.",
+    credentialTitle: "Certificat vérifiable",
+    downloadCertificate: "Télécharger le certificat (PDF)",
+    verifyCredential: "Vérifier ce certificat",
   },
   leaderboard: {
     title: "Classement",
@@ -378,6 +381,16 @@ const fr = {
     statusEnded: "Entretien terminé",
     turnErrorToast: "Erreur pendant l'échange, réessayez de parler.",
     reportErrorToast: "Erreur lors de la génération du rapport.",
+  },
+  verify: {
+    back: "Retour",
+    invalidTitle: "Certificat introuvable",
+    invalidDesc: "Ce lien de vérification est invalide, expiré ou ne correspond à aucun certificat public.",
+    validTitle: "Certificat vérifié",
+    issuedTo: "Délivré à",
+    score: "Score",
+    issuedOn: "Date de délivrance",
+    downloadPdf: "Télécharger le PDF",
   },
   admin: {
     categoriesTitle: "Catégories d'entretien",
@@ -632,6 +645,9 @@ const en: typeof fr = {
     continue: "Continue",
     start: "Start",
     notFound: "No certification found.",
+    credentialTitle: "Verifiable credential",
+    downloadCertificate: "Download certificate (PDF)",
+    verifyCredential: "Verify this credential",
   },
   leaderboard: {
     title: "Leaderboard",
@@ -791,6 +807,16 @@ const en: typeof fr = {
     statusEnded: "Interview finished",
     turnErrorToast: "Something went wrong, try speaking again.",
     reportErrorToast: "Error generating the report.",
+  },
+  verify: {
+    back: "Back",
+    invalidTitle: "Certificate not found",
+    invalidDesc: "This verification link is invalid, expired, or doesn't match any public certificate.",
+    validTitle: "Certificate verified",
+    issuedTo: "Issued to",
+    score: "Score",
+    issuedOn: "Issued on",
+    downloadPdf: "Download PDF",
   },
   admin: {
     categoriesTitle: "Interview Categories",

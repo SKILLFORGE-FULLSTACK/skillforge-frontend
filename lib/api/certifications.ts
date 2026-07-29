@@ -19,6 +19,20 @@ export interface CertificationDetail extends Certification {
   evaluation_criteria: Array<{ name: string; weight: number }>;
 }
 
+export interface UserBadge {
+  id: string;
+  title: string;
+  badge_type: string;
+  score: number | null;
+  verify_token: string;
+  verify_url: string;
+  badge_image_url: string | null;
+  certificate_url: string | null;
+  issued_at: string | null;
+  expires_at: string | null;
+  is_expired: boolean;
+}
+
 export interface Submission {
   id: string;
   certification: { slug: string; title: string; level: string };
@@ -28,6 +42,23 @@ export interface Submission {
   reviewed_at: string | null;
   days_remaining: number | null;
   expires_at: string | null;
+  badge?: UserBadge | null;
+}
+
+export interface VerifyBadgeResponse {
+  valid: boolean;
+  badge: {
+    title: string;
+    description: string | null;
+    score: number | null;
+    issued_at: string | null;
+    expires_at: string | null;
+    is_expired: boolean;
+    is_valid: boolean;
+    certificate_url: string | null;
+    developer: { name: string; username: string };
+    certification?: { title: string; category: string; level: string };
+  };
 }
 
 export const certificationsApi = {
@@ -70,5 +101,10 @@ export const certificationsApi = {
   getReport: async (submissionId: string) => {
     const { data } = await apiClient.get(`/submissions/${submissionId}/report`);
     return data.report;
+  },
+
+  verifyBadge: async (token: string): Promise<VerifyBadgeResponse> => {
+    const { data } = await apiClient.get(`/badges/verify/${token}`);
+    return data;
   },
 };

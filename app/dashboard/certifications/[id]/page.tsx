@@ -121,13 +121,8 @@ export default function CertificationDetailsPage({
 
           {/* Sidebar */}
           <div className="space-y-6">
-            {isPassed && submission && (
-              <VerifiableCredential
-                title={`${cert.title} Certified`}
-                id={`SF-${submission.id.slice(0, 8).toUpperCase()}`}
-                issuer="SkillForge Labs"
-                network="Ethereum Mainnet"
-              />
+            {isPassed && submission?.badge && (
+              <VerifiableCredential badge={submission.badge} />
             )}
             <SubmissionForm
               submissionId={submission?.id}

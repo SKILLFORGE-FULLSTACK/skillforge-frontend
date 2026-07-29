@@ -1,47 +1,51 @@
 "use client";
 
-import { Link as LinkIcon, Globe, Play, Loader2 } from "lucide-react";
+import { Link as LinkIcon, Globe, Play, Loader2, Download, ShieldCheck, ExternalLink } from "lucide-react";
 import { useState } from "react";
 import { useSubmitWork } from "@/lib/hooks/useCertifications";
+import { UserBadge } from "@/lib/api/certifications";
+import { useT } from "@/lib/i18n/useTranslation";
 
 interface VerifiableCredentialProps {
-  title: string;
-  id: string;
-  issuer: string;
-  network: string;
+  badge: UserBadge;
 }
 
-export function VerifiableCredential({ title, id, issuer, network }: VerifiableCredentialProps) {
+export function VerifiableCredential({ badge }: VerifiableCredentialProps) {
+  const { t } = useT();
+
   return (
     <div className="bg-card border border-border rounded-xl p-6">
-      <h3 className="text-xs uppercase tracking-wider text-accent text-center mb-4">
-        VERIFIABLE CREDENTIAL
-      </h3>
-
-      {/* QR Code Placeholder */}
-      <div className="w-32 h-32 mx-auto mb-4 bg-secondary rounded-lg p-2">
-        <div className="w-full h-full bg-background rounded grid grid-cols-5 gap-0.5 p-2">
-          {Array.from({ length: 25 }).map((_, i) => (
-            <div
-              key={i}
-              className={`${i % 3 === 0 || i % 7 === 0 ? "bg-foreground" : "bg-transparent"}`}
-            />
-          ))}
-        </div>
+      <div className="flex items-center justify-center gap-2 mb-4">
+        <ShieldCheck className="w-4 h-4 text-accent" />
+        <h3 className="text-xs uppercase tracking-wider text-accent">
+          {t("certifications.credentialTitle")}
+        </h3>
       </div>
 
-      <h4 className="text-center font-semibold text-foreground mb-1">{title}</h4>
-      <p className="text-center text-xs text-muted-foreground font-mono mb-4">ID: {id}</p>
+      <h4 className="text-center font-semibold text-foreground mb-1">{badge.title}</h4>
+      <p className="text-center text-xs text-muted-foreground font-mono mb-4">
+        {badge.score != null ? `${badge.score}/100` : null} · {badge.issued_at}
+      </p>
 
-      <div className="flex items-center justify-center gap-8 text-xs text-muted-foreground">
-        <div>
-          <span className="block text-muted-foreground/60 mb-0.5">ISSUED BY</span>
-          <span className="text-foreground">{issuer}</span>
-        </div>
-        <div>
-          <span className="block text-muted-foreground/60 mb-0.5">NETWORK</span>
-          <span className="text-foreground">{network}</span>
-        </div>
+      <div className="space-y-2">
+        {badge.certificate_url && (
+          <a
+            href={badge.certificate_url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-primary text-primary-foreground rounded-lg text-sm font-medium hover:bg-primary/90 transition-colors">
+            <Download className="w-4 h-4" />
+            {t("certifications.downloadCertificate")}
+          </a>
+        )}
+        <a
+          href={badge.verify_url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="w-full flex items-center justify-center gap-2 px-4 py-2.5 border border-border rounded-lg text-sm text-muted-foreground hover:bg-secondary hover:text-foreground transition-colors">
+          <ExternalLink className="w-4 h-4" />
+          {t("certifications.verifyCredential")}
+        </a>
       </div>
     </div>
   );
