@@ -59,6 +59,7 @@ export default function InterviewReportPage({ params }: ReportPageProps) {
   const durationMin = session.duration_sec ? Math.round(session.duration_sec / 60) : "—";
 
   const readinessLabels: Record<string, { label: string; color: string }> = {
+    senior_ready: { label: "Prêt niveau senior", color: "text-success" },
     ready:        { label: "Prêt pour un entretien réel", color: "text-success" },
     almost_ready: { label: "Presque prêt", color: "text-warning" },
     improving:    { label: "En progression", color: "text-primary" },
