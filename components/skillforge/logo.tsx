@@ -1,17 +1,20 @@
 import Link from "next/link"
+import type { MouseEventHandler } from "react"
 
 interface LogoProps {
   href?: string
   showSubtitle?: boolean
   subtitle?: string
   className?: string
+  onClick?: MouseEventHandler<HTMLAnchorElement>
 }
 
 export function Logo({ 
   href = "/", 
   showSubtitle = false, 
   subtitle = "Engineering Hub",
-  className = "" 
+  className = "",
+  onClick,
 }: LogoProps) {
   const content = (
     <div className={`flex items-center gap-2 ${className}`}>
@@ -23,7 +26,7 @@ export function Logo({
   )
 
   if (href) {
-    return <Link href={href}>{content}</Link>
+    return <Link href={href} onClick={onClick}>{content}</Link>
   }
 
   return content

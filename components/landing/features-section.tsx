@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link"
-import { Code2, Award, CheckCircle } from "lucide-react"
+import { Award, CheckCircle, Code2, Sparkles } from "lucide-react"
 import { useT } from "@/lib/i18n/useTranslation"
 import { useAuthStore } from "@/lib/stores/authStore"
 
@@ -16,7 +16,7 @@ export function FeaturesSection() {
       : "/dashboard"
 
   return (
-    <section id="solutions" className="py-20 lg:py-32">
+    <section id="solutions" className="scroll-mt-24 py-20 lg:py-32">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 className="text-3xl lg:text-4xl font-bold text-foreground mb-12">
           {t("landing.features.title")}
@@ -67,20 +67,12 @@ export function FeaturesSection() {
               {t("landing.features.certification.description")}
             </p>
 
-            <div className="flex items-center gap-2 mb-4">
-              <div className="w-8 h-8 rounded-full bg-destructive/20 border-2 border-destructive" />
-              <div className="w-8 h-8 rounded-full bg-warning/20 border-2 border-warning -ml-2" />
-              <div className="w-8 h-8 rounded-full bg-success/20 border-2 border-success -ml-2" />
-            </div>
-
-            <p className="text-xs text-muted-foreground">
-              {t("landing.features.certification.certified")}
-            </p>
+            <CertificationPreview />
           </div>
         </div>
 
         {/* Marketplace Section */}
-        <div id="enterprise" className="mt-8 bg-card border border-border rounded-xl overflow-hidden">
+        <div id="enterprise" className="mt-8 scroll-mt-24 bg-card border border-border rounded-xl overflow-hidden">
           <div className="lg:flex">
             <div className="lg:w-1/2 aspect-video lg:aspect-auto bg-secondary/30">
               <MarketplacePreview />
@@ -110,6 +102,56 @@ export function FeaturesSection() {
         </div>
       </div>
     </section>
+  )
+}
+
+function CertificationPreview() {
+  const { t } = useT()
+  const steps = [
+    {
+      label: t("landing.features.certification.steps.project"),
+      detail: t("landing.features.certification.steps.projectDetail"),
+      className: "border-primary bg-primary/10 text-primary",
+      icon: Code2,
+    },
+    {
+      label: t("landing.features.certification.steps.review"),
+      detail: t("landing.features.certification.steps.reviewDetail"),
+      className: "border-warning bg-warning/10 text-warning",
+      icon: Sparkles,
+    },
+    {
+      label: t("landing.features.certification.steps.badge"),
+      detail: t("landing.features.certification.steps.badgeDetail"),
+      className: "border-success bg-success/10 text-success",
+      icon: Award,
+    },
+  ]
+
+  return (
+    <div className="rounded-xl border border-border bg-secondary/30 p-4 sm:p-5">
+      <p className="mb-5 text-[10px] font-semibold tracking-[0.16em] text-muted-foreground">
+        {t("landing.features.certification.journey")}
+      </p>
+      <div className="relative grid grid-cols-3 gap-2">
+        {steps.map(({ label, detail, className, icon: Icon }, index) => (
+          <div key={label} className="relative z-10 flex flex-col items-center text-center">
+            <div className={`flex h-[4.5rem] w-[4.5rem] items-center justify-center rounded-full border-2 ${className}`}>
+              <div className="flex flex-col items-center gap-0.5 leading-none">
+                <Icon className="h-4 w-4" aria-hidden="true" />
+                <span className="text-[9px] font-bold uppercase tracking-tight">{label}</span>
+              </div>
+            </div>
+            <p className="mt-3 text-xs font-semibold text-foreground">{index + 1}. {label}</p>
+            <p className="mt-1 max-w-24 text-[10px] leading-snug text-muted-foreground">{detail}</p>
+          </div>
+        ))}
+      </div>
+      <div className="mt-5 flex items-center gap-2 rounded-lg border border-success/20 bg-success/5 px-3 py-2 text-xs text-muted-foreground">
+        <CheckCircle className="h-4 w-4 shrink-0 text-success" />
+        <span>{t("landing.features.certification.certified")}</span>
+      </div>
+    </div>
   )
 }
 

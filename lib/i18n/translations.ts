@@ -28,6 +28,15 @@ const fr = {
       },
       certification: {
         title: "Certification par projet",
+        journey: "PARCOURS DE CERTIFICATION",
+        steps: {
+          project: "Projet",
+          projectDetail: "Livrez une solution réelle",
+          review: "IA",
+          reviewDetail: "Recevez une évaluation détaillée",
+          badge: "Badge",
+          badgeDetail: "Partagez une preuve vérifiée",
+        },
         description:
           "Oubliez les QCM. Livrez du code de production réel pour valider vos compétences et obtenir un badge vérifiable que vous pouvez partager avec des recruteurs.",
         certified: "Un badge vérifiable, reconnu par les recruteurs partenaires",
@@ -454,6 +463,15 @@ const en: typeof fr = {
       },
       certification: {
         title: "Project-Based Certification",
+        journey: "CERTIFICATION JOURNEY",
+        steps: {
+          project: "Project",
+          projectDetail: "Ship a real solution",
+          review: "AI",
+          reviewDetail: "Receive detailed feedback",
+          badge: "Badge",
+          badgeDetail: "Share verified proof",
+        },
         description:
           "Forget multiple-choice tests. Ship real production code to validate your skills and earn a verifiable badge you can share with recruiters.",
         certified: "A verifiable badge, recognized by partner recruiters",
